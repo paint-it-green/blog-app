@@ -1,5 +1,14 @@
 {
-  "extends": "tslint:recommended",
+  "extends": [
+    "tslint:recommended",
+    "tslint-angular",
+    "tslint-config-prettier"
+  ],
+  "linterOptions": {
+    "exclude": [
+      "app/*.d.ts"
+    ]
+  },
   "rulesDirectory": [
     "codelyzer"
   ],
@@ -66,13 +75,19 @@
     ],
     "quotemark": [
       true,
-      "single"
+      "double"
     ],
     "semicolon": {
       "options": [
         "always"
       ]
     },
+    "prefer-const": [
+      true,
+      {
+        "destructuring": "any"
+      }
+    ],
     "space-before-function-paren": {
       "options": {
         "anonymous": "never",
@@ -104,11 +119,16 @@
         }
       ]
     },
+    "no-trailing-whitespace": [
+      true,
+      "ignore-comments"
+    ],
     "variable-name": {
       "options": [
         "ban-keywords",
         "check-format",
-        "allow-pascal-case"
+        "allow-pascal-case",
+        "allow-leading-underscore"
       ]
     },
     "whitespace": {
@@ -129,13 +149,14 @@
     "no-input-rename": true,
     "no-inputs-metadata-property": true,
     "no-output-native": true,
-    "no-output-on-prefix": true,
+    "no-output-on-prefix": false,
     "no-output-rename": true,
     "no-outputs-metadata-property": true,
     "template-banana-in-box": true,
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
+    "no-output-named-after-standard-event": true,
     "directive-selector": [
       true,
       "attribute",
