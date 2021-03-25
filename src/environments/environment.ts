@@ -4,6 +4,8 @@
 
 export const environment = {
   production: false,
+  API_URL: "https://api.webbytechexpert.com/devTest/api.php",
+  API_TOKEN: "ldnfmsnpypswryizouvsofhdftjfldnp",
 };
 
 /*

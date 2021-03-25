@@ -14,7 +14,6 @@ export class ArticleComponent implements OnInit {
 
   constructor(
     private _modalService: BsModalService,
-    private _bsModalRef: BsModalRef,
   ) { }
 
   ngOnInit(): void { }
@@ -24,7 +23,7 @@ export class ArticleComponent implements OnInit {
       title: "Add Article",
       actionBtnName: "Add",
     };
-    this._bsModalRef = this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
+    this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
   }
 
 }
