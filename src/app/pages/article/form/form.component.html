@@ -1,0 +1,33 @@
+<div class="modal-header">
+  <h4 class="modal-title pull-left">{{title}}</h4>
+  <button type="button" class="close pull-right" aria-label="Close" (click)="bsModalRef.hide()">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+<div class="modal-body">
+  <form id="articleForm">
+    <div class="form-row">
+      <div class="col-12 mb-3">
+        <label for="articleTitle">Title</label>
+        <input type="text" class="form-control is-valid" id="articleTitle" placeholder="Article Title" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-12 mb-3">
+        <label for="articleTitle">Description</label>
+        <textarea rows="5" class="form-control is-valid" id="articleDescription" placeholder="Article Description"
+          required></textarea>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-default" (click)="bsModalRef.hide()">Cancel</button>
+  <button type="submit" class="btn btn-primary" form="articleForm">{{actionBtnName}}</button>
+</div>

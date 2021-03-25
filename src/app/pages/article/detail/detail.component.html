@@ -1,0 +1,57 @@
+<section class="article fade-in">
+
+  <div class="d-flex py-1">
+    <button type="button" class="btn bg-white btn-sm mb-2" (click)="back()">
+      <i class="bi bi-chevron-left"></i>
+      Back
+    </button>
+    <button type="button" class="btn bg-white btn-lg ml-auto text-danger article--btn-delete"
+      (click)="confirmDelete(confirmTemplate)">
+      <i class="bi bi-trash"></i> Delete
+    </button>
+  </div>
+
+  <img src="https://dummyimage.com/vga" class="article__img">
+
+
+
+  <div class="article__body">
+    <h1 class="article__body--title">Lorem ipsum, dolor sit amet consectetur adipisicing elit.</h1>
+
+    <div class="article__body--date text-muted font-italic">Jun 24, 2019</div>
+
+    <p class="article__body--content mt-5">
+      Lorem ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.Lorem
+      ipsum, dolor sit amet consectetur adipisicing elit. Culpa, non unde nulla eius ad totam commodi, ipsam
+      blanditiis nihil error animi natus dolorum officiis. Repellendus quasi corporis tenetur perferendis ipsam.
+    </p>
+  </div>
+
+</section>
+
+<ng-template #confirmTemplate>
+  <div class="modal-body text-center">
+    <p>Do you want to delete this article?</p>
+    <button type="button" class="btn btn-default mr-2" (click)="delete()">Yes</button>
+    <button type="button" class="btn btn-primary" (click)="decline()">No</button>
+  </div>
+</ng-template>
