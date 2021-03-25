@@ -14,9 +14,9 @@ export class ApiService {
     private readonly _http: HttpClient,
   ) { }
 
-  get = (p = {}): Observable<any> => {
+  get = <T>(p = {}): Promise<T> => {
     const params = this._getParams(p);
-    return this._http.get(env.API_URL, { params });
+    return this._http.get<T>(env.API_URL, { params }).toPromise();
   }
 
   post = <T, U>(data: T): Promise<U> => {
