@@ -1,0 +1,19 @@
+.article {
+  width: 100vh;
+  margin: 0 auto;
+  margin-bottom: 10vh;
+
+  &--btn-delete {
+    font-size: 1rem;
+  }
+
+  &__img {
+    width: 100%;
+  }
+
+  &__body {
+    &--content {
+      font-size: 20px;
+    }
+  }
+}
