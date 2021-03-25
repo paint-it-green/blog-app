@@ -1,6 +1,10 @@
-import { IArticle } from "../interfaces/article";
+import { IArticle, IArticleData } from "../interfaces";
 
-export class Article implements IArticle {
+export class Article implements IArticleData {
+
+  id: string;
+  createdDate: string;
+  updatedDate: string;
 
   title: string;
   description: string;
@@ -16,6 +20,18 @@ export class Article implements IArticle {
       title: this.title,
       description: this.description,
       picture: this.picture,
+    };
+  }
+
+  get articleData(): IArticleData {
+
+    return {
+      id: this.id,
+      title: this.title,
+      description: this.description,
+      picture: this.picture,
+      createdDate: this.createdDate,
+      updatedDate: this.updatedDate,
     };
   }
 

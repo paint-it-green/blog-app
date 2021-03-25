@@ -2,8 +2,10 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
+import { IArticleData } from "src/app/shared/interfaces";
 
 import { FormComponent } from "../form/form.component";
+import { ApiService } from "src/app/shared/services/api.service";
 
 @Component({
   selector: "app-list",
@@ -12,21 +14,22 @@ import { FormComponent } from "../form/form.component";
 })
 export class ListComponent implements OnInit {
 
-  private _articles = new Array(10).fill(null);
+  private _articles: Array<IArticleData> = [];
   private _perpage = 3;
   private _currentPage = 1;
-  canLoadMore = true;
-  articles = [];
+  canLoadMore = false;
+  articles: Array<IArticleData> = [];
 
   constructor(
     private readonly _activeRoute: ActivatedRoute,
     private readonly _router: Router,
     private _modalService: BsModalService,
     private _bsModalRef: BsModalRef,
+    private _apiService: ApiService,
   ) { }
 
   ngOnInit(): void {
-    this.loadMore();
+    this._initData();
   }
 
   loadMore(): void {
@@ -35,7 +38,7 @@ export class ListComponent implements OnInit {
     this.canLoadMore = this.articles.length !== this._articles.length;
   }
 
-  private _getArticles(currentPage, perPage): Array<null> {
+  private _getArticles(currentPage, perPage): Array<IArticleData> {
     const offset = (currentPage - 1) * perPage;
     const length = offset + perPage;
     const copy = [...this._articles];
@@ -69,6 +72,14 @@ export class ListComponent implements OnInit {
 
   decline(): void {
     this._bsModalRef.hide();
+  }
+
+  private async _initData(): Promise<void> {
+    try {
+      const res = await this._apiService.get<Array<IArticleData>>();
+      this._articles = res;
+      this.loadMore();
+    } catch (error) { }
   }
 
 }

@@ -1,14 +1,12 @@
 <div class="container-fluid">
 
   <div class="article d-flex flex-wrap justify-content-center mb-5">
-    <div class="card article--item fade-in" *ngFor="let item of articles" (click)="view()">
-      <img class="card-img-top" src="https://dummyimage.com/vga" alt="Card image cap">
+    <div class="card article--item fade-in" *ngFor="let article of articles" (click)="view()">
+      <img class="card-img-top" [src]="article.picture" alt="Card image cap">
       <div class="card-body">
-        <h5 class="card-title">Article title</h5>
-        <span class="text-muted">Jun 24, 2019</span>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's
-          content.
-        </p>
+        <h5 class="card-title">{{article.title}}</h5>
+        <span class="text-muted">{{article.createdDate | date:'longDate'}}</span>
+        <p class="card-text">{{article | slice:0:200}}</p>
 
         <div class="d-flex justify-content-end">
           <button type="button" class="btn bg-white text-success" (click)="editArticle($event)">
@@ -22,6 +20,8 @@
       </div>
     </div>
   </div>
+
+  <h3 class="text-muted text-center" *ngIf="articles.length === 0">No articles to display</h3>
 
   <div class="load-more mb-5" *ngIf="canLoadMore">
     <button (click)="loadMore()" type="button" class="btn btn-secondary btn-sm">
