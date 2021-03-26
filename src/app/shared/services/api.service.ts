@@ -22,9 +22,9 @@ export class ApiService {
     return this._http.post<U>(env.API_URL, data).toPromise();
   }
 
-  put = <T>(data: T, p = {}): Promise<T> => {
+  put = <T, U>(data: T, p = {}): Promise<U> => {
     const params = this._getParams(p);
-    return this._http.put<T>(env.API_URL, data, { params }).toPromise();
+    return this._http.put<U>(env.API_URL, data, { params }).toPromise();
   }
 
   delete = <T>(p = {}): Promise<T> => {

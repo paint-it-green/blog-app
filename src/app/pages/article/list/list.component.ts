@@ -6,6 +6,7 @@ import { IArticleData, IResponse } from "src/app/shared/interfaces";
 
 import { FormComponent } from "../form/form.component";
 import { ApiService } from "src/app/shared/services/api.service";
+import { Article } from "src/app/shared/models/article.model";
 
 @Component({
   selector: "app-list",
@@ -56,11 +57,12 @@ export class ListComponent implements OnInit {
     this._bsModalRef = this._modalService.show(template, { initialState, class: "modal-sm" });
   }
 
-  editArticle(evt: Event): void {
+  editArticle(evt: Event, article: IArticleData): void {
     evt.stopPropagation();
     const initialState = {
       title: "Edit Article",
-      actionBtnName: "Edit",
+      actionBtnName: "edit",
+      article: new Article().deserialize(article)
     };
     this._bsModalRef = this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
   }
