@@ -3,7 +3,7 @@ import { IArticle, IArticleData } from "../interfaces";
 export class Article implements IArticleData {
 
   id: string;
-  createdDate: string;
+  createdAt: string;
   updatedDate: string;
 
   title: string;
@@ -30,8 +30,7 @@ export class Article implements IArticleData {
       title: this.title,
       description: this.description,
       picture: this.picture,
-      createdDate: this.createdDate,
-      updatedDate: this.updatedDate,
+      createdAt: this.createdAt,
     };
   }
 
