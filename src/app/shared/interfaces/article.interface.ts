@@ -5,6 +5,6 @@ export interface IArticle {
 }
 
 export interface IArticleData extends IArticle {
-  id: string;
+  id: number;
   createdAt: string;
 }

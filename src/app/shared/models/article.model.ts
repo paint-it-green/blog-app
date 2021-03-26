@@ -2,7 +2,7 @@ import { IArticle, IArticleData } from "../interfaces";
 
 export class Article implements IArticleData {
 
-  id: string;
+  id: number;
   createdAt: string;
   updatedDate: string;
 

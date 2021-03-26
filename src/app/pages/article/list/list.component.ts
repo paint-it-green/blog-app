@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { IArticle, IArticleData } from "src/app/shared/interfaces";
+import { IArticleData, IResponse } from "src/app/shared/interfaces";
 
 import { FormComponent } from "../form/form.component";
 import { ApiService } from "src/app/shared/services/api.service";
@@ -16,7 +16,7 @@ export class ListComponent implements OnInit {
 
   private _articles: Array<IArticleData> = [];
   private _perpage = 3;
-  private _currentPage = 1;
+  private _selectedArticle: IArticleData;
   canLoadMore = false;
   articles: Array<IArticleData> = [];
   hasArticles: boolean;
@@ -34,25 +34,22 @@ export class ListComponent implements OnInit {
   }
 
   loadMore(): void {
-    this.articles.push(...this._getArticles(this._currentPage, this._perpage));
-    this._currentPage++;
-    this.canLoadMore = this.articles.length !== this._articles.length;
+    this.articles.push(...this._getArticles(this._perpage));
+    this.canLoadMore = !!this._articles.length;
     this.hasArticles = this.articles.length > 0;
   }
 
-  private _getArticles(currentPage, perPage): Array<IArticleData> {
-    const offset = (currentPage - 1) * perPage;
-    const length = offset + perPage;
-    const copy = [...this._articles];
-    return copy.slice(offset, length);
+  private _getArticles(perPage: number): Array<IArticleData> {
+    return this._articles.splice(0, perPage);
   }
 
   view(article: IArticleData): void {
     this._router.navigate(["details", article.id], { relativeTo: this._activeRoute });
   }
 
-  confirmDelete(evt: Event, template: TemplateRef<any>): void {
+  confirmDelete(evt: Event, article: IArticleData, template: TemplateRef<any>): void {
     evt.stopPropagation();
+    this._selectedArticle = article;
     const initialState = {
       confirmMessage: "Delete Article?"
     };
@@ -68,8 +65,19 @@ export class ListComponent implements OnInit {
     this._bsModalRef = this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
   }
 
-  delete(): void {
-    this._bsModalRef.hide();
+  async delete(): Promise<void> {
+    const { id } = this._selectedArticle;
+    if (id) {
+      try {
+        const res = await this._apiService.delete<IResponse>({ id });
+        console.log({ res });
+        if (res.status === "success") {
+          this._removeDeleted(this._selectedArticle.id);
+          this._selectedArticle = null;
+        }
+        this._bsModalRef.hide();
+      } catch (error) { }
+    }
   }
 
   decline(): void {
@@ -82,6 +90,11 @@ export class ListComponent implements OnInit {
       this._articles = res;
       this.loadMore();
     } catch (error) { }
+  }
+
+  private _removeDeleted(articleId: number): void {
+    const index = this.articles.findIndex((({ id }) => id === articleId));
+    this.articles.splice(index, 1);
   }
 
 }
