@@ -1,8 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import { take } from "rxjs/operators";
+import { Subject, Subscription } from "rxjs";
 
 import { BsModalRef } from "ngx-bootstrap/modal";
 import { IArticle, IResponse } from "src/app/shared/interfaces";
@@ -29,6 +28,7 @@ export class FormComponent implements OnInit, OnDestroy {
     private _cdRef: ChangeDetectorRef,
   ) { }
 
+  onClose: Subject<IArticle>;
   title = "";
   actionBtnName = "";
   errorMessage = "";
@@ -38,6 +38,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private _subscription: Subscription;
 
   ngOnInit(): void {
+    this.onClose = new Subject();
     this._initForm();
     this._initLoader();
   }
@@ -90,7 +91,7 @@ export class FormComponent implements OnInit, OnDestroy {
       const res = await this._apiService.post<IArticle, IResponse>(this.article.article);
       this.errorMessage = (res.status === "failed") ? res.reason : "";
       if (res.status === "success") {
-        this._onSuccess();
+        this._onSuccess(true);
       }
     } catch (error) {
       this.errorMessage = "Something went wrong";
@@ -102,17 +103,21 @@ export class FormComponent implements OnInit, OnDestroy {
       const res = await this._apiService.put<IArticle, IResponse>(this.article.article, { id: this.article.id });
       this.errorMessage = (res.status === "failed") ? res.reason : "";
       if (res.status === "success") {
-        this._onSuccess();
+        this._onSuccess(false);
       }
     } catch (error) {
       this.errorMessage = "Something went wrong";
     }
   }
 
-  private _onSuccess(): void {
+  private _onSuccess(shouldRedirect: boolean): void {
     this.form.reset();
+    this.onClose.next(this.article.article);
     this.bsModalRef.hide();
-    this._router.navigate(["article"], { relativeTo: this._activeRoute.root });
+    if (shouldRedirect) {
+      this._router.navigateByUrl("/")
+        .then(() => this._router.navigate(["article"], { relativeTo: this._activeRoute.root }));
+    }
   }
 
 }
