@@ -21,7 +21,7 @@ export class ArticleComponent implements OnInit {
   addArticle(): void {
     const initialState = {
       title: "Add Article",
-      actionBtnName: "Add",
+      actionBtnName: "add",
     };
     this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
   }

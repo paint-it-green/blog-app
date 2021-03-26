@@ -148,10 +148,13 @@ describe("ApiService PUT", () => {
   });
 
   it("should able to update article", () => {
-    const mockResponse = { ...mockData, title: "New Title" };
-    service.put<IArticle>(mockData, { id: 1 })
-      .then((response: IArticle) => {
-        expect(response.title).toEqual("New Title");
+    const mockResponse: IResponse = {
+      status: "success",
+      reason: ""
+    };
+    service.put<IArticle, IResponse>(mockData, { id: 1 })
+      .then((response: IResponse) => {
+        expect(response.status).toEqual("success");
       })
       .catch(() => fail("expecting a status 204 request, returns error instead"));
 
@@ -161,13 +164,16 @@ describe("ApiService PUT", () => {
   });
 
   it("should return an error when the server returns a server error", () => {
-    const mockResponse = { ...mockData, title: "New Title" };
+    const mockResponse: IResponse = {
+      status: "success",
+      reason: ""
+    };
     const errorResponse = new HttpErrorResponse({
       status: 500,
       statusText: "Internal Server Error"
     });
 
-    service.put<IArticle>(mockData, { id: 1 })
+    service.put<IArticle, IResponse>(mockData, { id: 1 })
       .then(() => fail("expecting an error, not status 204"))
       .catch((error) => expect(error.status).toEqual(500));
 
