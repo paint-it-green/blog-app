@@ -4,7 +4,7 @@ import { Location } from "@angular/common";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
 import { ApiService } from "src/app/shared/services/api.service";
-import { IArticleData } from "src/app/shared/interfaces";
+import { IArticleData, IResponse } from "src/app/shared/interfaces";
 
 @Component({
   selector: "app-detail",
@@ -23,10 +23,11 @@ export class DetailComponent implements OnInit {
 
   article: IArticleData;
   errorMessage: string;
+  articleId: number;
 
   ngOnInit(): void {
-    const id = this._activeRoute.snapshot.paramMap.get("id");
-    this._getArticle(+id);
+    this.articleId = +this._activeRoute.snapshot.paramMap.get("id");
+    this._getArticle(this.articleId);
   }
 
   back(): void {
@@ -40,8 +41,16 @@ export class DetailComponent implements OnInit {
     this._bsModalRef = this._modalService.show(template, { initialState, class: "modal-sm" });
   }
 
-  delete(): void {
-    this._bsModalRef.hide();
+  async delete(): Promise<void> {
+    if (this.articleId) {
+      try {
+        const res = await this._apiService.delete<IResponse>({ id: this.articleId });
+        this._bsModalRef.hide();
+        if (res.status === "success") {
+          this.back();
+        }
+      } catch (error) { }
+    }
   }
 
   decline(): void {
