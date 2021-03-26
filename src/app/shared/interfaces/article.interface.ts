@@ -6,6 +6,5 @@ export interface IArticle {
 
 export interface IArticleData extends IArticle {
   id: string;
-  createdDate: string;
-  updatedDate: string;
+  createdAt: string;
 }

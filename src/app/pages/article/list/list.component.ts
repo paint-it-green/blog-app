@@ -19,6 +19,7 @@ export class ListComponent implements OnInit {
   private _currentPage = 1;
   canLoadMore = false;
   articles: Array<IArticleData> = [];
+  hasArticles: boolean;
 
   constructor(
     private readonly _activeRoute: ActivatedRoute,
@@ -36,6 +37,7 @@ export class ListComponent implements OnInit {
     this.articles.push(...this._getArticles(this._currentPage, this._perpage));
     this._currentPage++;
     this.canLoadMore = this.articles.length !== this._articles.length;
+    this.hasArticles = this.articles.length > 0;
   }
 
   private _getArticles(currentPage, perPage): Array<IArticleData> {
