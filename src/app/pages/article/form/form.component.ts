@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, Validators, FormBuilder, AbstractControl } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -17,7 +17,7 @@ import { HttpLoaderService } from "src/app/shared/services/http-loader.service";
   styleUrls: ["./form.component.scss"],
   providers: [FormBuilder],
 })
-export class FormComponent implements OnInit {
+export class FormComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly _activeRoute: ActivatedRoute,
@@ -40,17 +40,10 @@ export class FormComponent implements OnInit {
   ngOnInit(): void {
     this._initForm();
     this._initLoader();
-    this._onHideListener();
   }
 
-  private _onHideListener(): void {
-    this.bsModalRef.onHide
-      .pipe(take(1))
-      .subscribe(() => {
-        if (this._subscription) {
-          this._subscription.unsubscribe();
-        }
-      });
+  ngOnDestroy(): void {
+    this._subscription.unsubscribe();
   }
 
   private _initLoader(): void {
