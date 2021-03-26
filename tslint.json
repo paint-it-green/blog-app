@@ -156,7 +156,6 @@
     "template-no-negated-async": true,
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
-    "no-output-named-after-standard-event": true,
     "directive-selector": [
       true,
       "attribute",
