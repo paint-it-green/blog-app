@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { IArticleData } from "src/app/shared/interfaces";
+import { IArticle, IArticleData } from "src/app/shared/interfaces";
 
 import { FormComponent } from "../form/form.component";
 import { ApiService } from "src/app/shared/services/api.service";
@@ -47,8 +47,8 @@ export class ListComponent implements OnInit {
     return copy.slice(offset, length);
   }
 
-  view(): void {
-    this._router.navigate(["details/1"], { relativeTo: this._activeRoute });
+  view(article: IArticleData): void {
+    this._router.navigate(["details", article.id], { relativeTo: this._activeRoute });
   }
 
   confirmDelete(evt: Event, template: TemplateRef<any>): void {
