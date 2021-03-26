@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Observable } from "rxjs";
 
 import { environment as env } from "src/environments/environment";
 
@@ -23,14 +22,14 @@ export class ApiService {
     return this._http.post<U>(env.API_URL, data).toPromise();
   }
 
-  put = <T>(data: T, p = {}): Observable<any> => {
+  put = <T>(data: T, p = {}): Promise<T> => {
     const params = this._getParams(p);
-    return this._http.put(env.API_URL, data, { params });
+    return this._http.put<T>(env.API_URL, data, { params }).toPromise();
   }
 
-  delete = (p = {}): Observable<any> => {
+  delete = <T>(p = {}): Promise<T> => {
     const params = this._getParams(p);
-    return this._http.delete(env.API_URL, { params });
+    return this._http.delete<T>(env.API_URL, { params }).toPromise();
   }
 
   private _getParams(p = {}): HttpParams {
