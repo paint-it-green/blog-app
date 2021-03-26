@@ -2,7 +2,7 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { IArticleData, IResponse } from "src/app/shared/interfaces";
+import { IArticle, IArticleData, IResponse } from "src/app/shared/interfaces";
 
 import { FormComponent } from "../form/form.component";
 import { ApiService } from "src/app/shared/services/api.service";
@@ -65,6 +65,12 @@ export class ListComponent implements OnInit {
       article: new Article().deserialize(article)
     };
     this._bsModalRef = this._modalService.show(FormComponent, { initialState, ignoreBackdropClick: true, class: "modal-lg" });
+    this._bsModalRef.content.onClose
+      .subscribe((updatedArticle: IArticle) => {
+        if (updatedArticle) {
+          this._updateArticle(new Article().deserialize({ ...article, ...updatedArticle }).articleData);
+        }
+      });
   }
 
   async delete(): Promise<void> {
@@ -92,6 +98,13 @@ export class ListComponent implements OnInit {
       this._articles = res;
       this.loadMore();
     } catch (error) { }
+  }
+
+  private _updateArticle(article: IArticleData): void {
+    const index = this.articles.findIndex((({ id }) => id === article.id));
+    if (index >= 0) {
+      this.articles[index] = article;
+    }
   }
 
   private _removeDeleted(articleId: number): void {
