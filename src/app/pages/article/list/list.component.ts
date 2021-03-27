@@ -2,11 +2,11 @@ import { Component, OnInit, TemplateRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { IArticle, IArticleData, IResponse } from "src/app/shared/interfaces";
 
+import { IArticle, IArticleData, IResponse } from "src/app/shared/interfaces";
 import { FormComponent } from "../form/form.component";
-import { ApiService } from "src/app/shared/services/api.service";
-import { Article } from "src/app/shared/models/article.model";
+import { ApiService } from "src/app/shared/services";
+import { Article } from "src/app/shared/models";
 
 @Component({
   selector: "app-list",

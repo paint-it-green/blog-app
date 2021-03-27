@@ -4,11 +4,10 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subject, Subscription } from "rxjs";
 
 import { BsModalRef } from "ngx-bootstrap/modal";
-import { IArticle, IResponse } from "src/app/shared/interfaces";
 
-import { Article } from "src/app/shared/models/article.model";
-import { ApiService } from "src/app/shared/services/api.service";
-import { HttpLoaderService } from "src/app/shared/services/http-loader.service";
+import { IArticle, IResponse } from "src/app/shared/interfaces";
+import { Article } from "src/app/shared/models";
+import { ApiService, HttpLoaderService } from "src/app/shared/services";
 
 @Component({
   selector: "app-article-form",

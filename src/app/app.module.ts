@@ -6,8 +6,7 @@ import { RouteReuseStrategy } from "@angular/router";
 import { AppComponent } from "./app.component";
 import { BootstrapModule } from "./bootstrap.module";
 import { AppRoutingModule, components } from "./app-routing.module";
-import { HttpInterceptorService } from "./shared/services/http-interceptor.service";
-import { CustomRouteReuseStrategyService } from "./shared/services/custom-route-reuse-strategy.service";
+import { HttpInterceptorService, CustomRouteReuseStrategyService } from "./shared/services";
 
 @NgModule({
   declarations: [AppComponent, ...components],

@@ -3,7 +3,8 @@ import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { ApiService } from "src/app/shared/services/api.service";
+
+import { ApiService } from "src/app/shared/services";
 import { IArticleData, IResponse } from "src/app/shared/interfaces";
 
 @Component({
