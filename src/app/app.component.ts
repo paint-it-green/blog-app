@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 
-import { HttpLoaderService } from "./shared/services/http-loader.service";
+import { HttpLoaderService } from "./shared/services";
 
 @Component({
   selector: "app-root",

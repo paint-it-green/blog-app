@@ -1,12 +1,13 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { IArticle, IArticleData, IResponse } from "src/app/shared/interfaces";
 
+import { IArticle, IArticleData, IResponse } from "src/app/shared/interfaces";
 import { FormComponent } from "../form/form.component";
-import { ApiService } from "src/app/shared/services/api.service";
-import { Article } from "src/app/shared/models/article.model";
+import { ApiService } from "src/app/shared/services";
+import { Article } from "src/app/shared/models";
+import { ConfirmDeleteComponent } from "src/app/shared/component";
 
 @Component({
   selector: "app-list",
@@ -48,13 +49,19 @@ export class ListComponent implements OnInit {
     this._router.navigate(["details", article.id], { relativeTo: this._activeRoute });
   }
 
-  confirmDelete(evt: Event, article: IArticleData, template: TemplateRef<any>): void {
+  confirmDelete(evt: Event, article: IArticleData): void {
     evt.stopPropagation();
     this._selectedArticle = article;
     const initialState = {
-      confirmMessage: "Delete Article?"
+      message: "Delete Article?"
     };
-    this._bsModalRef = this._modalService.show(template, { initialState, class: "modal-sm" });
+    this._bsModalRef = this._modalService.show(ConfirmDeleteComponent, { initialState, class: "modal-sm" });
+    this._bsModalRef.content.onClose
+      .subscribe((flag: boolean) => {
+        if (flag) {
+          this.delete();
+        }
+      });
   }
 
   editArticle(evt: Event, article: IArticleData): void {
@@ -73,23 +80,17 @@ export class ListComponent implements OnInit {
       });
   }
 
-  async delete(): Promise<void> {
+  private async delete(): Promise<void> {
     const { id } = this._selectedArticle;
     if (id) {
       try {
         const res = await this._apiService.delete<IResponse>({ id });
-        console.log({ res });
         if (res.status === "success") {
           this._removeDeleted(this._selectedArticle.id);
           this._selectedArticle = null;
         }
-        this._bsModalRef.hide();
       } catch (error) { }
     }
-  }
-
-  decline(): void {
-    this._bsModalRef.hide();
   }
 
   private async _initData(): Promise<void> {

@@ -1,10 +1,12 @@
-import { Component, OnInit, TemplateRef } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Location } from "@angular/common";
 
 import { BsModalService, BsModalRef } from "ngx-bootstrap/modal";
-import { ApiService } from "src/app/shared/services/api.service";
+
+import { ApiService } from "src/app/shared/services";
 import { IArticleData, IResponse } from "src/app/shared/interfaces";
+import { ConfirmDeleteComponent } from "src/app/shared/component";
 
 @Component({
   selector: "app-detail",
@@ -34,14 +36,20 @@ export class DetailComponent implements OnInit {
     this._location.back();
   }
 
-  confirmDelete(template: TemplateRef<any>): void {
+  confirmDelete(): void {
     const initialState = {
-      confirmMessage: "Delete Article?"
+      message: "Delete Article?"
     };
-    this._bsModalRef = this._modalService.show(template, { initialState, class: "modal-sm" });
+    this._bsModalRef = this._modalService.show(ConfirmDeleteComponent, { initialState, class: "modal-sm" });
+    this._bsModalRef.content.onClose
+      .subscribe((flag: boolean) => {
+        if (flag) {
+          this.delete();
+        }
+      });
   }
 
-  async delete(): Promise<void> {
+  private async delete(): Promise<void> {
     if (this.articleId) {
       try {
         const res = await this._apiService.delete<IResponse>({ id: this.articleId });
@@ -51,10 +59,6 @@ export class DetailComponent implements OnInit {
         }
       } catch (error) { }
     }
-  }
-
-  decline(): void {
-    this._bsModalRef.hide();
   }
 
   private async _getArticle(id: number): Promise<void> {
