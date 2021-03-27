@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { BsModalRef, ModalModule } from "ngx-bootstrap/modal";
 
 import { ConfirmDeleteComponent } from "./confirm-delete.component";
 
@@ -8,7 +9,13 @@ describe("ConfirmDeleteComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ConfirmDeleteComponent]
+      declarations: [ConfirmDeleteComponent],
+      providers: [
+        BsModalRef
+      ],
+      imports: [
+        ModalModule.forRoot(),
+      ]
     })
       .compileComponents();
   });
